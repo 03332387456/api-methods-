@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Button from '@mui/material/Button'
 import { useParams } from "react-router-dom";
+import { Get, Post, Put } from "../apimethods";
 
 export default function AddProject() {
   const [model, setModel] = useState<any>({});
-  const api = "https://jsonplaceholder.typicode.com/comments";
   const params = useParams();
 
   const getPostById = () => {
-    axios
-      .get(`${api}/${params.id}`)
+      Get(`comments/${params.id}`)
       .then((res) => {
         console.log(res);
         setModel({ ...res.data });
@@ -21,8 +19,8 @@ export default function AddProject() {
   };
 
   const updatePost = () => {
-    axios
-      .put(`${api}/${params.id}`, model)
+    
+     Put("comments",model)
       .then((res) => {
         console.log("Post Updated Successfully ==>", res.data);
       })
@@ -32,9 +30,7 @@ export default function AddProject() {
   };
 
   const submitPost = () => {
-    model.userId = 11;
-    axios
-      .post(api, model)
+      Post("comments",model)
       .then((res) => {
         console.log("Post Added Successfully ==>", res.data);
       })
@@ -101,7 +97,7 @@ export default function AddProject() {
           </div>
         </div>
       </div>
-        {/* Rest of your component code */}
+        
         {params.id ? (
           <Button variant="contained" color="success" onClick={updatePost}>Update</Button>
         ) : (

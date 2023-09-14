@@ -5,14 +5,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Get , Delete } from "../apimethods";
 
 function Project() {
   const [gatdata, setgatdata] = useState<any>([]);
   const navigate = useNavigate();
 
-  const deletecomment = (id : any) => {
-    axios
-      .delete(`https://jsonplaceholder.typicode.com/comments/${id}`)
+  const deletecomment = (id: any) => {
+    Delete("comments")
       .then(() => {
         console.log("comment Deleted Successfully");
         fetchData();
@@ -23,8 +23,7 @@ function Project() {
   };
 
   let fetchData = () => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/comments")
+    Get("comments")
       .then((res) => {
         setgatdata(res.data);
       })
@@ -49,7 +48,7 @@ function Project() {
           Add comments here
         </Button>
       </div>
-      {gatdata.map((x:any, i:any) => (
+      {gatdata.map((x: any, i: any) => (
         <div className="container mb-4" key={i}>
           <div className="row">
             <div className="col-md-12">
@@ -97,4 +96,3 @@ function Project() {
 }
 
 export default Project;
-
